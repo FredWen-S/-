@@ -26,7 +26,7 @@ DeepSeek Harness + dsh-mobile-gui-agent 手机插件 + Android 模拟器。
 | 插件安装包 | `plugins\dsh-mobile-gui-agent-0.2.1-local.8.tgz` | profile 通过 `file:` 引用这个文件 |
 | 聊天入口 | `chatEntry: deferred`（`phone_start_task`） | 阶段 A 原型 `executor` 已关闭，见下文 |
 | 默认模型 | `deepseek-flash`（界面显示 DeepSeek-Flash） | 支持看图；旧会话仍是原来选的模型 |
-| 模拟器 | `dsh_api34`：Android 14 google_apis x86_64 | `hw.gpu.mode=host`，内存 4096 MB |
+| 模拟器 | `dsh_api34`：Android 14 google_apis x86_64 | `hw.gpu.mode=angle_indirect`，内存 4096 MB |
 | 备用模拟器 | `medium_phone`：Android 16 | 原有，未改动 |
 
 ## 改过的配置文件
@@ -60,8 +60,9 @@ DeepSeek Harness + dsh-mobile-gui-agent 手机插件 + Android 模拟器。
 
 ### 模拟器 `dsh_api34`（`%USERPROFILE%\.android\avd\dsh_api34.avd\config.ini`）
 
-- `hw.gpu.mode=host`：默认渲染和 swiftshader 软件渲染都会开机循环（卡在 SurfaceFlinger），用宿主机显卡才能开机。
+- `hw.gpu.mode=angle_indirect`（ANGLE 渲染）：默认渲染和 swiftshader 软件渲染都会开机循环（卡在 SurfaceFlinger）；`host` 能开机，但在这台 Intel Arc 显卡上模拟器窗口一直黑屏（手机本身正常，ADB 截图有画面）。ANGLE 既能开机，窗口也有画面。改之前的配置备份在同目录 `config.ini.bak`。
 - `hw.ramSize=4096`。
+- 窗口位置和大小在同目录的 `emulator-user.ini`：`window.x = 40`、`window.y = 40`、`window.scale = 0.300000`。手机是 1080×2400，窗口原尺寸比屏幕高，顶边会跑到屏幕外面，而模拟器窗口没有标题栏，拖不动；缩小后整个窗口都在屏幕内。觉得太小可以把 `window.scale` 调大，改完重启模拟器生效。
 
 ### `home\.agent-presets\whale\`（鲸鱼娘 Agent 预设）
 
