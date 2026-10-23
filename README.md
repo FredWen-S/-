@@ -7,9 +7,13 @@ DeepSeek Harness + dsh-mobile-gui-agent 手机插件 + Android 模拟器。
 
 1. 双击 `start.cmd`：启动 Android 14 模拟器（没开时）、关闭动画、启动 Harness 并打开浏览器（http://127.0.0.1:3080）。
    - 换用 Android 16 模拟器：`pwsh -File start.ps1 -Avd medium_phone`
-2. 在 Harness 里**新建会话**，先随便发一句话（插件要求先有一轮对话，手机面板才会出现）。
-3. 切到 **mobile_gui_agent** 标签，选设备，在“任务”栏写任务，点“开始”。
-4. 结果显示在面板顶部和“Agent 步骤”最后一步（来自 finish 的 message）。
+2. 在 Harness 里**新建会话**，直接在聊天里说要在手机上做什么，例如“帮我看看手机蓝牙开没开”。
+   - 模型会调用 `phone_start_task`，说一句“开始操作手机”后结束这次回复，手机任务随即在同一个会话里启动。
+   - 只有一台在线设备时自动使用它；多台时模型会问你用哪台。
+   - 问原理、要操作说明、写代码时不会动手机。
+   - 手机任务运行期间这个会话不能聊别的，要等任务结束或在面板里点“停止”。
+3. 也可以用面板：先随便发一句话，切到 **mobile_gui_agent** 标签，选设备，在“任务”栏写任务，点“开始”。
+4. 无论从哪里启动，进度和结果都显示在 mobile_gui_agent 面板（“Agent 步骤”最后一步来自 finish 的 message），对话里也能看到每一步。
 
 ## 版本一览
 
@@ -18,8 +22,8 @@ DeepSeek Harness + dsh-mobile-gui-agent 手机插件 + Android 模拟器。
 | DeepSeek Harness | `@deepseek-ai/dsh` **0.1.0-rc.8**（`package.json`） | 插件声明只兼容 0.1.x，不能直接升到 0.2.x |
 | HMR 插件 | `@deepseek-ai/cordis-plugin-hmr` **1.0.17**（锁定） | rc.8 启动需要 `registerConfig`，1.0.18 起被删掉 |
 | Timer 插件 | `@deepseek-ai/cordis-plugin-timer` 1.1.7 | rc.8 的依赖里漏装，手动补上 |
-| 手机插件 | `dsh-mobile-gui-agent` **0.2.1-local.3** | 本地构建，见下文“插件源码” |
-| 插件安装包 | `plugins\dsh-mobile-gui-agent-0.2.1-local.3.tgz` | profile 通过 `file:` 引用这个文件 |
+| 手机插件 | `dsh-mobile-gui-agent` **0.2.1-local.4** | 本地构建，见下文“插件源码” |
+| 插件安装包 | `plugins\dsh-mobile-gui-agent-0.2.1-local.4.tgz` | profile 通过 `file:` 引用这个文件 |
 | 默认模型 | `deepseek-flash`（界面显示 DeepSeek-Flash） | 支持看图；旧会话仍是原来选的模型 |
 | 模拟器 | `dsh_api34`：Android 14 google_apis x86_64 | `hw.gpu.mode=host`，内存 4096 MB |
 | 备用模拟器 | `medium_phone`：Android 16 | 原有，未改动 |
@@ -85,6 +89,7 @@ DeepSeek Harness + dsh-mobile-gui-agent 手机插件 + Android 模拟器。
 - **换回旧的本地插件**：用上面的 `plugin add` 命令装 `plugins` 里的 `local.1` 或 `local.2`。
   - local.1：只有观察兜底和超时修复
   - local.2：再加截图缩放
+  - local.3：再加 finish 收尾提醒（没有聊天启动工具）
 - **换回上游原版插件**：`plugins\profile-package.json.before` 是第一次装本地插件前的 profile `package.json`（引用 GitHub 上游提交 `7a77944`），用它覆盖 `home\profiles\web\package.json` 后，在该目录运行 `pnpm install`。
 - **不让模型看图**：删掉 `cordis.patch.yml` 里 `llm-deepseek` 和 `agent-default-model` 两段，重启 Harness。
 

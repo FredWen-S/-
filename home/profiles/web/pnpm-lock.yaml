@@ -18,8 +18,8 @@ importers:
         specifier: 1.1.7
         version: 1.1.7
       dsh-mobile-gui-agent:
-        specifier: file:C:/phone/plugins/dsh-mobile-gui-agent-0.2.1-local.3.tgz
-        version: file:../../../plugins/dsh-mobile-gui-agent-0.2.1-local.3.tgz
+        specifier: file:C:/phone/plugins/dsh-mobile-gui-agent-0.2.1-local.4.tgz
+        version: file:../../../plugins/dsh-mobile-gui-agent-0.2.1-local.4.tgz
 
 packages:
 
@@ -230,9 +230,9 @@ packages:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
 
-  dsh-mobile-gui-agent@file:../../../plugins/dsh-mobile-gui-agent-0.2.1-local.3.tgz:
-    resolution: {integrity: sha512-ALOSjdY/OaoM25xgsMZY+NrclKLa15eHbl/Q5gZRpeb0vhj309IY7Ad172FwyKX2JJIpRH7/6g9AOjMns6NY3Q==, tarball: file:../../../plugins/dsh-mobile-gui-agent-0.2.1-local.3.tgz}
-    version: 0.2.1-local.3
+  dsh-mobile-gui-agent@file:../../../plugins/dsh-mobile-gui-agent-0.2.1-local.4.tgz:
+    resolution: {integrity: sha512-Q4h7ZvzombjzrkeWXJ+nrcZ6LsC0BMLagPBG/w6G64YmH/G4jc+JVV9sdmFC9AO81Z71As7wRVduyUJtx58heg==, tarball: file:../../../plugins/dsh-mobile-gui-agent-0.2.1-local.4.tgz}
+    version: 0.2.1-local.4
     engines: {node: ^22.19.0 || >=24.0.0}
     peerDependencies:
       '@deepseek-ai/cordis': ^4.0.1
@@ -462,7 +462,7 @@ snapshots:
 
   detect-libc@2.1.2: {}
 
-  dsh-mobile-gui-agent@file:../../../plugins/dsh-mobile-gui-agent-0.2.1-local.3.tgz:
+  dsh-mobile-gui-agent@file:../../../plugins/dsh-mobile-gui-agent-0.2.1-local.4.tgz:
     dependencies:
       '@deepseek-ai/schemastery': 3.18.5
       fast-xml-parser: 5.11.2
