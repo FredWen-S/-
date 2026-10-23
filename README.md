@@ -22,8 +22,8 @@ DeepSeek Harness + dsh-mobile-gui-agent 手机插件 + Android 模拟器。
 | DeepSeek Harness | `@deepseek-ai/dsh` **0.1.0-rc.8**（`package.json`） | 插件声明只兼容 0.1.x，不能直接升到 0.2.x |
 | HMR 插件 | `@deepseek-ai/cordis-plugin-hmr` **1.0.17**（锁定） | rc.8 启动需要 `registerConfig`，1.0.18 起被删掉 |
 | Timer 插件 | `@deepseek-ai/cordis-plugin-timer` 1.1.7 | rc.8 的依赖里漏装，手动补上 |
-| 手机插件 | `dsh-mobile-gui-agent` **0.2.1-local.6** | 本地构建，见下文“插件源码” |
-| 插件安装包 | `plugins\dsh-mobile-gui-agent-0.2.1-local.6.tgz` | profile 通过 `file:` 引用这个文件 |
+| 手机插件 | `dsh-mobile-gui-agent` **0.2.1-local.8** | 本地构建，见下文“插件源码” |
+| 插件安装包 | `plugins\dsh-mobile-gui-agent-0.2.1-local.8.tgz` | profile 通过 `file:` 引用这个文件 |
 | 聊天入口 | `chatEntry: deferred`（`phone_start_task`） | 阶段 A 原型 `executor` 已关闭，见下文 |
 | 默认模型 | `deepseek-flash`（界面显示 DeepSeek-Flash） | 支持看图；旧会话仍是原来选的模型 |
 | 模拟器 | `dsh_api34`：Android 14 google_apis x86_64 | `hw.gpu.mode=host`，内存 4096 MB |
@@ -100,6 +100,7 @@ DeepSeek Harness + dsh-mobile-gui-agent 手机插件 + Android 模拟器。
   - local.3：再加 finish 收尾提醒（没有聊天启动工具）
   - local.4：再加聊天里一句话启动（`phone_start_task`）
   - local.6：再加阶段 A 原型（默认关闭，`chatEntry: executor` 才启用）。local.5 是它的中间版本，用户停止后模型会重跑任务，已删除
+  - local.8：手机任务每步动作前说一句进度；finish 后在聊天里用一两句话复述结果（只复述 finish 内容，不加推断）。local.7 是中间版本，总结会加上屏幕上没有的信息（猜上午/下午、说在充电）
 - **换回上游原版插件**：`plugins\profile-package.json.before` 是第一次装本地插件前的 profile `package.json`（引用 GitHub 上游提交 `7a77944`），用它覆盖 `home\profiles\web\package.json` 后，在该目录运行 `pnpm install`。
 - **不让模型看图**：删掉 `cordis.patch.yml` 里 `llm-deepseek` 和 `agent-default-model` 两段，重启 Harness。
 
