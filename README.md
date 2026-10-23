@@ -54,6 +54,15 @@ DeepSeek Harness + dsh-mobile-gui-agent 手机插件 + Android 模拟器。
 - `hw.gpu.mode=host`：默认渲染和 swiftshader 软件渲染都会开机循环（卡在 SurfaceFlinger），用宿主机显卡才能开机。
 - `hw.ramSize=4096`。
 
+### `home\.agent-presets\whale\`（鲸鱼娘 Agent 预设）
+
+- 在输入框上方的预设菜单里选「鲸鱼娘模式」即可，按会话选择；新会话默认仍是「标准模式」（`standard`）。
+- `agent.cordis.yml` 是自带 `standard` 预设（dsh 0.1.0-rc.8）的原样拷贝，只改了开头的 `persona` 文本；`preset.yml` 是菜单里的名称、说明和排序（order 5）。
+- 人设只管语气。文本里写明了优先级：工具规则、手机操作规则和 `finish` 优先，`finish` 的结果必须准确完整，代码、路径、数字保持原样。
+- 预设必须自带 persona：`standard` 等预设的 persona 会盖掉部署级 persona，所以只改 `cordis.patch.yml` 里的 persona 对网页会话不生效。
+- 修改后不用重启 Harness，下次打开预设菜单就会重新读取。
+- 已测：鲸鱼娘模式下普通聊天是鲸鱼娘口吻；同一会话里的手机任务（查看蓝牙开关）照常调用 `finish`，结果准确，而且人设仍在系统提示词里。
+
 ## 插件源码
 
 - 仓库：`C:\dsh-mobile-gui-agent`，基于上游 v0.2.1（提交 `7a77944`）
