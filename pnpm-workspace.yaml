@@ -1,0 +1,9 @@
+allowBuilds:
+  '@deepseek-ai/dsh-subprocess-local': true
+  '@google/genai': true
+  koffi: true
+  node-pty: true
+  protobufjs: true
+# 0.1.0-rc.8 的启动代码需要 hmr.registerConfig, 1.0.18 起被移除
+overrides:
+  '@deepseek-ai/cordis-plugin-hmr': 1.0.17

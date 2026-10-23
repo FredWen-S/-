@@ -1,0 +1,18 @@
+{
+  "name": "dsh-profile-web",
+  "private": true,
+  "dependencies": {
+    "@deepseek-ai/cordis-plugin-hmr": "1.0.17",
+    "@deepseek-ai/cordis-plugin-timer": "1.1.7",
+    "dsh-mobile-gui-agent": "file:C:/phone/plugins/dsh-mobile-gui-agent-0.2.1-local.3.tgz"
+  },
+  "dsh": {
+    "profile": {
+      "bundles": [
+        "@deepseek-ai/dsh-base",
+        "@deepseek-ai/dsh-web-app",
+        "dsh-mobile-gui-agent"
+      ]
+    }
+  }
+}

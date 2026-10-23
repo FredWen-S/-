@@ -1,0 +1,30 @@
+# Your patch layer for this dsh profile, applied after every bundle layer:
+# a top-level YAML array of loader patch entries (id-targeted config
+# overrides, disables, and insert lists; `!!js` expressions allowed).
+# 0.1.0-rc.8 启动时需要 HMR 服务, 而 web-app 默认把它关了, 这里重新打开
+- id: hmr
+  name: '@deepseek-ai/cordis-plugin-hmr'
+  config:
+    root:
+      - .
+  disabled: false
+# 内置目录只有 deepseek-v4-flash / deepseek-v4-pro 且都默认只收文字;
+# 加入官方可看图的 deepseek-flash, 手机插件才会把截图发给模型
+- id: llm-deepseek
+  name: '@deepseek-ai/dsh-llm-deepseek'
+  config:
+    models:
+      - id: deepseek-flash
+        name: DeepSeek-Flash
+        description: 支持图片输入
+        inputModalities: [text, image]
+      - id: deepseek-v4-flash
+        name: DeepSeek-V4-Flash
+      - id: deepseek-v4-pro
+        name: DeepSeek-V4-Pro
+# 新会话默认使用可看图的 deepseek-flash
+- id: agent-default-model
+  name: '@deepseek-ai/dsh-agent-default-model'
+  config:
+    provider: deepseek-official
+    model: deepseek-flash
