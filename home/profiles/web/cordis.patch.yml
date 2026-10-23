@@ -28,3 +28,39 @@
   config:
     provider: deepseek-official
     model: deepseek-flash
+# 聊天入口 chatEntry：
+#   deferred（日常使用）：phone_start_task，回复结束后在同一会话启动手机任务，面板同步显示。
+#   executor（阶段 A 原型）：phone_run_task，在子会话执行 Agent 上跑任务并把结果带回聊天；
+#     原型限制：高风险操作一律被拒绝、等待时看不到进度、子会话在界面上打不开。
+# 补丁行整行替换 config，所以 adb/agent 其余各项都要照抄默认值。
+- id: mobile-gui-agent
+  name: dsh-mobile-gui-agent
+  config:
+    adb:
+      adbPath: adb
+      commandTimeoutMs: 10000
+      processGraceMs: 1000
+      screenshotMaxBytes: 16777216
+      hierarchyMaxBytes: 4194304
+      diagnosticMaxBytes: 65536
+      hierarchyMaxElements: 400
+      hierarchyMaxSerializedBytes: 65536
+      hierarchyAttempts: 3
+      hierarchyRetryDelayMs: 300
+      stablePollMs: 300
+      stableSamples: 3
+      stableTimeoutMs: 5000
+      stableDifferenceThreshold: 0.01
+    agent:
+      maxSteps: 50
+      taskTimeoutMs: 600000
+      actionTimeoutMs: 30000
+      maxConsecutiveFailures: 5
+      stablePollMs: 300
+      stableSamples: 3
+      stableTimeoutMs: 5000
+      stableDifferenceThreshold: 0.01
+      approvalEnabled: true
+      traceScreenshots: true
+      maxTraceSteps: 100
+      chatEntry: deferred

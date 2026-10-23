@@ -4,7 +4,7 @@
   "dependencies": {
     "@deepseek-ai/cordis-plugin-hmr": "1.0.17",
     "@deepseek-ai/cordis-plugin-timer": "1.1.7",
-    "dsh-mobile-gui-agent": "file:C:/phone/plugins/dsh-mobile-gui-agent-0.2.1-local.4.tgz"
+    "dsh-mobile-gui-agent": "file:C:/phone/plugins/dsh-mobile-gui-agent-0.2.1-local.6.tgz"
   },
   "dsh": {
     "profile": {

@@ -22,8 +22,9 @@ DeepSeek Harness + dsh-mobile-gui-agent 手机插件 + Android 模拟器。
 | DeepSeek Harness | `@deepseek-ai/dsh` **0.1.0-rc.8**（`package.json`） | 插件声明只兼容 0.1.x，不能直接升到 0.2.x |
 | HMR 插件 | `@deepseek-ai/cordis-plugin-hmr` **1.0.17**（锁定） | rc.8 启动需要 `registerConfig`，1.0.18 起被删掉 |
 | Timer 插件 | `@deepseek-ai/cordis-plugin-timer` 1.1.7 | rc.8 的依赖里漏装，手动补上 |
-| 手机插件 | `dsh-mobile-gui-agent` **0.2.1-local.4** | 本地构建，见下文“插件源码” |
-| 插件安装包 | `plugins\dsh-mobile-gui-agent-0.2.1-local.4.tgz` | profile 通过 `file:` 引用这个文件 |
+| 手机插件 | `dsh-mobile-gui-agent` **0.2.1-local.6** | 本地构建，见下文“插件源码” |
+| 插件安装包 | `plugins\dsh-mobile-gui-agent-0.2.1-local.6.tgz` | profile 通过 `file:` 引用这个文件 |
+| 聊天入口 | `chatEntry: deferred`（`phone_start_task`） | 阶段 A 原型 `executor` 已关闭，见下文 |
 | 默认模型 | `deepseek-flash`（界面显示 DeepSeek-Flash） | 支持看图；旧会话仍是原来选的模型 |
 | 模拟器 | `dsh_api34`：Android 14 google_apis x86_64 | `hw.gpu.mode=host`，内存 4096 MB |
 | 备用模拟器 | `medium_phone`：Android 16 | 原有，未改动 |
@@ -35,8 +36,12 @@ DeepSeek Harness + dsh-mobile-gui-agent 手机插件 + Android 模拟器。
 - **打开 HMR 服务**（`id: hmr`，`disabled: false`）：web 版默认关闭，但 rc.8 在 Windows 上启动必须有，否则报 “user patch-layer watching requires the Cordis HMR service”。
 - **模型目录**（`id: llm-deepseek`）：内置目录只有 `deepseek-v4-flash`、`deepseek-v4-pro`，且都默认“只收文字”，插件因此不发截图。这里加入 `deepseek-flash` 并声明 `inputModalities: [text, image]`，原两个模型保留。
 - **默认模型**（`id: agent-default-model`）：改为 `deepseek-flash`。
+- **手机插件配置**（`id: mobile-gui-agent`）：照抄插件默认值，只多了 `agent.chatEntry`：
+  - `deferred`（当前）：聊天用 `phone_start_task`，回复结束后在同一会话启动手机任务，面板同步显示。
+  - `executor`（设计稿阶段 A 原型）：聊天用 `phone_run_task`，在子会话的执行 Agent 上跑任务，聊天等到结束后由主模型汇报结果；聊天的“停止”按钮能直接停掉执行 Agent。原型限制：高风险操作一律被拒绝（还没有把审批转到聊天）、等待期间看不到进度、子会话在界面上打不开。
+  - 切换方法：改这一项后重启 Harness。
 
-注意：这类补丁行是整行替换，不是合并；改 `llm-deepseek` 的 `models` 时要写出完整列表。
+注意：这类补丁行是整行替换，不是合并；改 `llm-deepseek` 的 `models` 或 `mobile-gui-agent` 的配置时都要写出完整内容。
 
 ### `pnpm-workspace.yaml`（`C:\phone` 和 `home\profiles\web` 两处）
 
@@ -78,7 +83,10 @@ DeepSeek Harness + dsh-mobile-gui-agent 手机插件 + Android 模拟器。
     - 失败后的补救观察有时限
     - 截图超过附件上限（每边 2000 像素）时先缩小，并告诉模型缩放比例
     - 要求答案写进 finish；模型只在对话里回答时提醒一次，用户取消仍会立即停止
-- 测试：`pnpm run check`（类型检查、构建、123 个测试、打包校验）
+- 分支：`feat/chat-start-phone-task`（基于上面的修复分支，只在本地，未推送）
+  - `c2a69bd` feat: 聊天里一句话启动手机任务（`phone_start_task`，回复结束后启动）
+  - `8a446c2` feat: 阶段 A 原型，子会话执行 Agent（`phone_run_task`，`chatEntry: executor` 才启用），新增依赖 `@deepseek-ai/dsh-subagent`
+- 测试：`pnpm run check`（类型检查、构建、128 个测试、打包校验）
 - 重新打包安装：
   1. 在源码仓库改 `package.json` 版本号，运行 `pnpm pack --pack-destination C:\phone\plugins`
   2. 先停掉 Harness，再在 `C:\phone` 运行（`DSH_HOME` 设为 `C:\phone\home`）：
@@ -90,6 +98,8 @@ DeepSeek Harness + dsh-mobile-gui-agent 手机插件 + Android 模拟器。
   - local.1：只有观察兜底和超时修复
   - local.2：再加截图缩放
   - local.3：再加 finish 收尾提醒（没有聊天启动工具）
+  - local.4：再加聊天里一句话启动（`phone_start_task`）
+  - local.6：再加阶段 A 原型（默认关闭，`chatEntry: executor` 才启用）。local.5 是它的中间版本，用户停止后模型会重跑任务，已删除
 - **换回上游原版插件**：`plugins\profile-package.json.before` 是第一次装本地插件前的 profile `package.json`（引用 GitHub 上游提交 `7a77944`），用它覆盖 `home\profiles\web\package.json` 后，在该目录运行 `pnpm install`。
 - **不让模型看图**：删掉 `cordis.patch.yml` 里 `llm-deepseek` 和 `agent-default-model` 两段，重启 Harness。
 

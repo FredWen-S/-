@@ -18,8 +18,8 @@ importers:
         specifier: 1.1.7
         version: 1.1.7
       dsh-mobile-gui-agent:
-        specifier: file:C:/phone/plugins/dsh-mobile-gui-agent-0.2.1-local.4.tgz
-        version: file:../../../plugins/dsh-mobile-gui-agent-0.2.1-local.4.tgz
+        specifier: file:C:/phone/plugins/dsh-mobile-gui-agent-0.2.1-local.6.tgz
+        version: file:../../../plugins/dsh-mobile-gui-agent-0.2.1-local.6.tgz
 
 packages:
 
@@ -230,9 +230,9 @@ packages:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
 
-  dsh-mobile-gui-agent@file:../../../plugins/dsh-mobile-gui-agent-0.2.1-local.4.tgz:
-    resolution: {integrity: sha512-Q4h7ZvzombjzrkeWXJ+nrcZ6LsC0BMLagPBG/w6G64YmH/G4jc+JVV9sdmFC9AO81Z71As7wRVduyUJtx58heg==, tarball: file:../../../plugins/dsh-mobile-gui-agent-0.2.1-local.4.tgz}
-    version: 0.2.1-local.4
+  dsh-mobile-gui-agent@file:../../../plugins/dsh-mobile-gui-agent-0.2.1-local.6.tgz:
+    resolution: {integrity: sha512-D17HXjK27G21QCyl+ix8R4rdScCYpvpAjPa7phr6TAVO649R4sB/4i/aufzZRK1BsS+2vxd5Wj9a7E8jJsTiXA==, tarball: file:../../../plugins/dsh-mobile-gui-agent-0.2.1-local.6.tgz}
+    version: 0.2.1-local.6
     engines: {node: ^22.19.0 || >=24.0.0}
     peerDependencies:
       '@deepseek-ai/cordis': ^4.0.1
@@ -247,6 +247,7 @@ packages:
       '@deepseek-ai/dsh-client-ui-slots': ^0.1.0-rc.5
       '@deepseek-ai/dsh-llm': ^0.1.0-rc.5
       '@deepseek-ai/dsh-session': ^0.1.0-rc.5
+      '@deepseek-ai/dsh-subagent': ^0.1.0-rc.5
       '@deepseek-ai/dsh-subprocess': ^0.1.0-rc.5
       '@deepseek-ai/dsh-system-prompt': ^0.1.0-rc.5
       '@deepseek-ai/dsh-tools': ^0.1.0-rc.5
@@ -462,7 +463,7 @@ snapshots:
 
   detect-libc@2.1.2: {}
 
-  dsh-mobile-gui-agent@file:../../../plugins/dsh-mobile-gui-agent-0.2.1-local.4.tgz:
+  dsh-mobile-gui-agent@file:../../../plugins/dsh-mobile-gui-agent-0.2.1-local.6.tgz:
     dependencies:
       '@deepseek-ai/schemastery': 3.18.5
       fast-xml-parser: 5.11.2
